@@ -1,4 +1,5 @@
-﻿using Server.DB.Method;
+﻿using MailServer.Processing;
+using Server.DB.Method;
 using ServerMail.DB.Method;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,9 @@ namespace ServerMail.Network
             try
             {
                 stream = client.GetStream();
-                byte[] data = new byte[512]; // буфер для получаемых данных
+                byte[] data = new byte[512];
                 while (true)
                 {
-                    // получаем сообщение
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
@@ -37,48 +37,11 @@ namespace ServerMail.Network
                         Console.WriteLine(builder.ToString());
                     }
                     while (stream.DataAvailable);
-                    
 
-                    string [] message = builder.ToString().Split('`');
-                    Check check;
-                    SetData setData;
-                    //GetDatesUser getDatesUser;
-                    switch (message[0])
-                    {
-                        case "+":
-                            check = new Check();
-                            if (check.Checked(message) == true)
-                            {
-                                data = Encoding.Unicode.GetBytes("+");
-                            }
-                            else
-                            {
-                                data = Encoding.Unicode.GetBytes("-");
-                            }
-                            break;
-                        case "AddUser":
-                            check = new Check();
-                            if (check.Registration(message) == true)
-                            {
-                                data = Encoding.Unicode.GetBytes("+");
-                            }
-                            else
-                            {
-                                data = Encoding.Unicode.GetBytes("-");
-                            }
-                            break;
-                        //case "GetData":
-                        //    GetDatesUser datesUser = new GetDatesUser();
-                        //    data = Encoding.Unicode.GetBytes(datesUser.Data(message[1]));
-                            //break;
-                        case "Save data":
-                           setData = new SetData();
-                            setData.SetDatas(message[1]);
-                            break;
-                         
-                        default:
-                            break;
-                    }
+
+                    string[] message = builder.ToString().Split('`');
+                    Request request = new Request();
+                    data= request.GetRequest(message);
                     stream.Write(data, 0, data.Length);
                     break;
                 }
