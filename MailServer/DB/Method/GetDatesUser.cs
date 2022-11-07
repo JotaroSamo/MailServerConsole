@@ -17,7 +17,7 @@ namespace ServerMail.DB.Method
             using (UserContext db = new UserContext())
             {
 
-                perm = JsonSerializer.Serialize(db.Messeges.Where(c => c.IdWhom == Mail));
+                perm = JsonSerializer.Serialize(db.Messeges.Where(c => c.IdWhom == Mail|| c.IdHow == Mail));
             }
             return perm;
         }
