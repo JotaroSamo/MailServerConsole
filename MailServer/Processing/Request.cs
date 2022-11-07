@@ -40,7 +40,7 @@ namespace MailServer.Processing
                         data = Encoding.Unicode.GetBytes("-");
                     }
                     break;
-                case "GetData":
+                case "Get Data":
                     getDatesUser = new GetDatesUser();
                     data = Encoding.Unicode.GetBytes(getDatesUser.Data(message[1]));
                     break;

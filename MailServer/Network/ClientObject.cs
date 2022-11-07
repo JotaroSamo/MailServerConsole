@@ -42,7 +42,10 @@ namespace ServerMail.Network
                     string[] message = builder.ToString().Split('`');
                     Request request = new Request();
                     data= request.GetRequest(message);
-                    stream.Write(data, 0, data.Length);
+                    if (data!=null)
+                    {
+                        stream.Write(data, 0, data.Length);
+                    }
                     break;
                 }
             }
