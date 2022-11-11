@@ -1,4 +1,5 @@
-﻿using Server.DB.Method;
+﻿using MailServer.DB.Method;
+using Server.DB.Method;
 using ServerMail.DB.Method;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MailServer.Processing
             Check check;
             SetData setData;
             GetDatesUser getDatesUser;
+            Delete delete;
             byte[] data=null;
             switch (message[0])
             {
@@ -48,7 +50,10 @@ namespace MailServer.Processing
                     setData = new SetData();
                     setData.SetDatas(message[1]);
                     break;
-
+                case "Delete":
+                    delete = new Delete();
+                    delete.DeleteData(message[1]);
+                    break;
                 default:
                     break;
             }
