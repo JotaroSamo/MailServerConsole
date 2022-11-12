@@ -11,7 +11,7 @@ namespace Server.DB.Content
     {
         public int Id { get; set; }
 
-      
+     
         public string? Mail { get; set; }
         public string? Passowrd { get; set; }
     }
