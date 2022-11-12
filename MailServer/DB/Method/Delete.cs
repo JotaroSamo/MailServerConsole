@@ -15,9 +15,7 @@ namespace MailServer.DB.Method
         {
             using (UserContext db = new UserContext())
             {
-                int b = int.Parse(a);
-                Messege del = db.Messeges.Where(c => c.Id == b).First();
-                db.Messeges.Remove(del);
+                db.Messeges.Remove(db.Messeges.Where(c => c.Id == int.Parse(a)).First());
                 db.SaveChanges();
             }
         }
