@@ -57,6 +57,7 @@ namespace MailServer.Processing
                 default:
                     break;
             }
+            Console.WriteLine(data);
             return data;
         }
     }

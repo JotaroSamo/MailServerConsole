@@ -3,22 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Server.DB.Method
 {
     class Check
     {
-        public bool Checked(string[] m)
+        public bool Checked(string [] m)
         {
             using (UserContext db = new UserContext())
             {
-
+                User user = JsonSerializer.Deserialize<User>(m[1]);
                 if (m[0]=="+")
                 {
                     foreach (var item in db.Users)
                     {
-                        if (item.Mail == m[1]&& item.Passowrd == m[2])
+                        if (item.Mail == user.Mail&& item.Passowrd == user.Passowrd)
                         {
                             return true;
                         }
@@ -29,7 +30,7 @@ namespace Server.DB.Method
                 {
                     foreach (var item in db.Users)
                     {
-                        if (item.Mail == m[1])
+                        if (item.Mail == user.Mail)
                         {
                             return false;
                         }
@@ -44,9 +45,10 @@ namespace Server.DB.Method
 
             using (UserContext db = new UserContext())
             {
+                User users = JsonSerializer.Deserialize<User>(m[1]);
                 if (Checked(m)==true)
                 {
-                    User user = new User { Mail = m[1], Passowrd = m[2] };
+                    User user = new User { Mail = users.Mail, Passowrd = users.Passowrd };
                     db.Users.Add(user);
                     db.SaveChanges();
                     return true;
