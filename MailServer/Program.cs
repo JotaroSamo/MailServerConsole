@@ -33,10 +33,9 @@ namespace ServerMail
                 {
                     TcpClient client = listener.AcceptTcpClient();
                     ClientObject clientObject = new ClientObject(client);
-
-                    // создаем новый поток для обслуживания нового клиента
                     Thread clientThread = new Thread(new ThreadStart(clientObject.Process));
                     clientThread.Start();
+                    Console.WriteLine("Новое подключение");
                 }
             }
             catch (Exception ex)

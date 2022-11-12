@@ -10,16 +10,17 @@ namespace Server.DB.Method
 {
     class Check
     {
+        User users;
         public bool Checked(string [] m)
         {
             using (UserContext db = new UserContext())
             {
-                User user = JsonSerializer.Deserialize<User>(m[1]);
+                users = JsonSerializer.Deserialize<User>(m[1]);
                 if (m[0]=="+")
                 {
                     foreach (var item in db.Users)
                     {
-                        if (item.Mail == user.Mail&& item.Passowrd == user.Passowrd)
+                        if (item.Mail == users.Mail&& item.Passowrd == users.Passowrd)
                         {
                             return true;
                         }
@@ -30,7 +31,7 @@ namespace Server.DB.Method
                 {
                     foreach (var item in db.Users)
                     {
-                        if (item.Mail == user.Mail)
+                        if (item.Mail == users.Mail)
                         {
                             return false;
                         }
@@ -45,7 +46,7 @@ namespace Server.DB.Method
 
             using (UserContext db = new UserContext())
             {
-                User users = JsonSerializer.Deserialize<User>(m[1]);
+                users = JsonSerializer.Deserialize<User>(m[1]);
                 if (Checked(m)==true)
                 {
                     User user = new User { Mail = users.Mail, Passowrd = users.Passowrd };

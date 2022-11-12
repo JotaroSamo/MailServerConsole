@@ -13,6 +13,7 @@ namespace ServerMail.Network
     public class ClientObject
     {
         public TcpClient client;
+        string[] message;
         public ClientObject(TcpClient tcpClient)
         {
             client = tcpClient;
@@ -37,11 +38,8 @@ namespace ServerMail.Network
                         Console.WriteLine(builder.ToString());
                     }
                     while (stream.DataAvailable);
-
-
-                    string[] message = builder.ToString().Split('`');
                     Request request = new Request();
-                    data= request.GetRequest(message);
+                     data=request.GetRequest(message = builder.ToString().Split('`'));
                     if (data!=null)
                     {
                         stream.Write(data, 0, data.Length);
