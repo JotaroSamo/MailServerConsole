@@ -41,6 +41,7 @@ namespace Server.DB.Method
                
             }
         }
+
         public bool Registration(string[] m)
         {
 
@@ -49,9 +50,13 @@ namespace Server.DB.Method
                 users = JsonSerializer.Deserialize<User>(m[1]);
                 if (Checked(m)==true)
                 {
-                    User user = new User { Mail = users.Mail, Passowrd = users.Passowrd };
-                    db.Users.Add(user);
-                    db.SaveChanges();
+                    if (m[2]=="+")
+                    {
+                        User user = new User { Mail = users.Mail, Passowrd = users.Passowrd };
+                        db.Users.Add(user);
+                        db.SaveChanges();
+                    }
+                   
                     return true;
                    
                 }
