@@ -19,7 +19,7 @@ namespace ServerMail.Network
             client = tcpClient;
         }
 
-        public void Process()
+        public async void Process()
         {
             NetworkStream stream = null;
             try
@@ -39,7 +39,7 @@ namespace ServerMail.Network
                     }
                     while (stream.DataAvailable);
                     Request request = new Request();
-                     data=request.GetRequest(message = builder.ToString().Split('`'));
+                     data= await request.GetRequest(message = builder.ToString().Split('`'));
                     if (data!=null)
                     {
                         stream.Write(data, 0, data.Length);

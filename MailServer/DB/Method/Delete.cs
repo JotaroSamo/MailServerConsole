@@ -11,12 +11,12 @@ namespace MailServer.DB.Method
 {
     public class Delete
     {
-        public void DeleteData(string a)
+        public async Task DeleteData (string a)
         {
             using (UserContext db = new UserContext())
             {
                 db.Messeges.Remove(db.Messeges.Where(c => c.Id == int.Parse(a)).First());
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

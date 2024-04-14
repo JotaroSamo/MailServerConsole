@@ -11,7 +11,7 @@ namespace MailServer.Processing
 {
     public class Request
     {
-        public byte[] GetRequest(string[] message)
+        public async Task<byte[]> GetRequest(string[] message)
         {
             Check check;
             SetData setData;
@@ -33,7 +33,7 @@ namespace MailServer.Processing
                     break;
                 case "AddUser":
                     check = new Check();
-                    if (check.Registration(message) == true)
+                    if (await check.Registration(message) == true)
                     {
                         data = Encoding.Unicode.GetBytes("+");
                     }
@@ -44,15 +44,15 @@ namespace MailServer.Processing
                     break;
                 case "Get Data":
                     getDatesUser = new GetDatesUser();
-                    data = Encoding.Unicode.GetBytes(getDatesUser.Data(message[1]));
+                    data = Encoding.Unicode.GetBytes(await getDatesUser.Data(message[1]));
                     break;
                 case "Save data":
                     setData = new SetData();
-                    setData.SetDatas(message[1]);
+                  await  setData.SetDatas(message[1]);
                     break;
                 case "Delete":
                     delete = new Delete();
-                    delete.DeleteData(message[1]);
+                   await delete.DeleteData(message[1]);
                     break;
                 default:
                     break;

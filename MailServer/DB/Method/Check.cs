@@ -42,7 +42,7 @@ namespace Server.DB.Method
             }
         }
 
-        public bool Registration(string[] m)
+        public async Task<bool> Registration(string[] m)
         {
 
             using (UserContext db = new UserContext())
@@ -53,8 +53,8 @@ namespace Server.DB.Method
                     if (m[2]=="+")
                     {
                         User user = new User { Mail = users.Mail, Passowrd = users.Passowrd };
-                        db.Users.Add(user);
-                        db.SaveChanges();
+                       await db.Users.AddAsync(user);
+                       await db.SaveChangesAsync();
                     }
                    
                     return true;
